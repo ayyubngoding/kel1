@@ -5,7 +5,10 @@ require 'functionobat.php';
 $nama = $_GET['namaobat'];
 // echo $nama;
 //mengambil data
-$query = mysqli_query($conn, "select * from obat where nama_obat='$nama'");
+$query = mysqli_query(
+    $conn,
+    "select * from obat where nama_obat LIKE '" . $nama . "%'"
+);
 $userid = mysqli_fetch_array($query);
 // echo print_r($userid);
 $data = [

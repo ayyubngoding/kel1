@@ -8,7 +8,7 @@ if (isset($_POST['submit'])) {
         echo "
     <script>
     alert('data berhasil disimpan');
-    document.location.href='pembelian.php';
+    document.location.href='penjualan.php';
     </script>
     
     ";
@@ -54,9 +54,26 @@ if (isset($_POST['submit'])) {
 
         <div class="kotak">
             <div class="label">
-        <label for="kodeobat">Nama Obat</label>
+        <label for="namaobat">Nama Obat</label>
         </div>
-        <input class="inputobat" type="text" id="namaobat" name="namaobat" onkeyup="autofill()" >
+        <select name="idobat" id="idobat" class="inputobat" onchange='changeValue(this.value)' required >  
+        <option value="">Pilih </option>
+
+        <?php $pembelian = mysqli_query($conn, 'SELECT * FROM obat'); ?>
+                <?php $a = "var harga_jual = new Array();\n;"; ?>
+                    <?php while ($row = mysqli_fetch_assoc($pembelian)): ?>
+                    <option value="<?= $row['id_obat'] ?>"><?= $row[
+    'nama_obat'
+] ?></option>
+                    <?php $a .=
+                        "harga_jual['" .
+                        $row['id_obat'] .
+                        "'] = {harga_jual:'" .
+                        addslashes($row['harga_jual']) .
+                        "'};\n"; ?>
+                    <?php endwhile; ?>
+                     </select>
+        <!-- <input class="inputobat" type="text" id="idobat" name="idobat" onkeyup="autofill()"> -->
         </div>
 
         <div class="kotak">
@@ -69,7 +86,7 @@ if (isset($_POST['submit'])) {
             <div class="label">
                 <label for="harga">Harga</label>
             </div>
-            <input class="inputobat" type="text" id="harga" name="harga">
+            <input class="inputobat" type="text" id="harga" name="harga" readonly>
         </div>
         
         <div class="kotak">
@@ -158,19 +175,28 @@ if (isset($_POST['submit'])) {
     </div>
 
     <script src="jquery-3.6.1.min.js"></script>
-    <script>
+    <script type="text/javascript">   
+                          <?php echo $a;
+//   echo $b;
+?>  
+                          function changeValue(id){  
+                            document.getElementById('harga').value = harga_jual[id].harga_jual;  
+                            // document.getElementById('warna').value = warna[id].warna;  
+                          };  
+                          </script>  
+    <!-- <script>
           function autofill(){
-                var nama_obat = $("#namaobat").val();
+                var nama_obat = $("#idobat").val();
                 $.ajax({
                     url: 'autofil.php',
-                    data:"namaobat="+nama_obat ,
-                }).success(function (data) {
+                    data:"idobat="+nama_obat ,
+                }).done(function (data) {
                     var json = data,
                     obj = JSON.parse(json);
                     $('#harga').val(obj.harga_jual);
                 
                 });
             }
-    </script>
+    </script> -->
 </body>
 </html>

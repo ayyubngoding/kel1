@@ -18,7 +18,6 @@ function tambah($data)
     global $conn;
     // ambil data dari tiap element dalam form
     $idobat = htmlspecialchars($data['idobat']);
-    $idsuplier = htmlspecialchars($data['idsuplier']);
     $qty = htmlspecialchars($data['qty']);
     $tanggal = htmlspecialchars($data['tanggal']);
     $harga = htmlspecialchars($data['harga']);
@@ -28,20 +27,20 @@ function tambah($data)
         $conn,
         "SELECT * FROM obat WHERE id_obat=$idobat"
     );
-    $ambildatanya = mysqli_fetch_assoc($cekstockobat);
 
+    $ambildatanya = mysqli_fetch_array($cekstockobat);
     $stocksekarang = $ambildatanya['stock'];
-    $tambahstocksekarangdgnqty = $stocksekarang + $qty;
+    $tambahstocksekarangdgnqty = $stocksekarang - $qty;
 
     // query insert data
     $addmasuk = mysqli_query(
         $conn,
-        "INSERT INTO pembelian VALUES('','$idobat','$idsuplier','$qty','$tanggal','$harga','$total')"
+        "INSERT INTO penjualan VALUES('','$idobat','$qty','$harga','$total','$tanggal')"
     );
-    $updatestockobat = mysqli_query(
-        $conn,
-        "UPDATE obat SET stock='$tambahstocksekarangdgnqty' WHERE id_obat=$idobat"
-    );
+    // $updatestockobat = mysqli_query(
+    //     $conn,
+    //     "UPDATE obat SET stock='$tambahstocksekarangdgnqty' WHERE id_obat=$idobat"
+    // );
 
     return mysqli_affected_rows($conn);
 }
