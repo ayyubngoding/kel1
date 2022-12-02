@@ -6,6 +6,9 @@
   box-sizing: border-box;
   overflow: hidden;
 }
+a {
+  text-decoration: none;
+}
 
 /* awal navbar */
 .container-hompage {
@@ -85,8 +88,7 @@
 }
 .navbar .obat button {
   background-color: transparent;
-  border: none;
-  color: white;
+  color: rgb(17, 15, 15);
 }
 /* akhir obat */
 

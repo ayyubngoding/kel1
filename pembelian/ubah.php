@@ -3,7 +3,7 @@ require 'functionobat.php';
 $id = $_GET['ubah'];
 $pembelian = mysqli_query(
     $conn,
-    "SELECT * FROM pembelian,obat,suplier WHERE id_pembelian=$id"
+    "SELECT * from pembelian,obat,suplier WHERE obat.id_obat=pembelian.id_obat and suplier.id_suplier=pembelian.id_suplier and id_pembelian=$id "
 );
 $result = mysqli_fetch_assoc($pembelian);
 // cek apakah tombol sudah di klik atau belim
@@ -112,7 +112,7 @@ if (isset($_POST['submit'])) {
         
         <div class="kotak">
             <div class="label">
-                <label for="harga">Hargai</label>
+                <label for="harga">Harga</label>
             </div>
             <input class="inputobat" type="text" id="harga" name="harga" value="<?= $result[
                 'harga'
@@ -156,12 +156,12 @@ if (isset($_POST['submit'])) {
                 </a>
             </div>
 
-            <div class="satuan">
+            <!-- <div class="satuan">
                 <a href="../satuan/satuan.php">
                 <img src="../image/obatn.svg" alt="satuan" class="img">
                 <button type="button">SATUAN</button>
                 </a>
-            </div>
+            </div> -->
 
             <div class="suplier">
                 <a href="../suplier/suplier.php">

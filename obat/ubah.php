@@ -156,10 +156,10 @@ if (isset($_POST['submit'])) {
                 <button type="button">OBAT</button>
             </div> -->
 
-            <div class="satuan">
+            <!-- <div class="satuan">
                 <img src="../image/obatn.svg" alt="satuan" class="img">
                 <button type="button">SATUAN</button>
-            </div>
+            </div> -->
 
             <div class="suplier">
                 <img src="../image/user1.svg" alt="suplier" class="img">

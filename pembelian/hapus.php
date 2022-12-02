@@ -6,7 +6,7 @@ if (hapus($id) > 0) {
     echo "
     <script>
     alert('data berhasil hapus');
-    document.location.href='obat.php';
+    document.location.href='pembelian.php';
     </script>
     
     ";
@@ -15,7 +15,7 @@ if (hapus($id) > 0) {
     
     <script>
     alert('gagal');
-    document.location.href='obat.php';
+    document.location.href='pembelian.php';
     </script>
     
     ";

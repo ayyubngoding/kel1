@@ -25,22 +25,43 @@ function tambah($data)
 
     $cekstockobat = mysqli_query(
         $conn,
-        "SELECT * FROM obat WHERE id_obat=$idobat"
+        "SELECT * FROM obat WHERE id_obat='$idobat'"
     );
 
-    $ambildatanya = mysqli_fetch_array($cekstockobat);
+    $ambildatanya = mysqli_fetch_assoc($cekstockobat);
+    // var_dump($cekstockobat);
     $stocksekarang = $ambildatanya['stock'];
-    $tambahstocksekarangdgnqty = $stocksekarang - $qty;
 
-    // query insert data
-    $addmasuk = mysqli_query(
-        $conn,
-        "INSERT INTO penjualan VALUES('','$idobat','$qty','$harga','$total','$tanggal')"
-    );
-    // $updatestockobat = mysqli_query(
-    //     $conn,
-    //     "UPDATE obat SET stock='$tambahstocksekarangdgnqty' WHERE id_obat=$idobat"
-    // );
+    if ($stocksekarang >= $qty) {
+        $tambahstocksekarangdgnqty = $stocksekarang - $qty;
+
+        // query insert data
+        $addmasuk = mysqli_query(
+            $conn,
+            "INSERT INTO penjualan VALUES('','$idobat','$qty','$harga','$total','$tanggal')"
+        );
+        $updatestockobat = mysqli_query(
+            $conn,
+            "UPDATE obat SET stock='$tambahstocksekarangdgnqty' WHERE id_obat=$idobat"
+        );
+        if ($addmasuk && $updatestockobat) {
+            echo "<script>
+        alert('Data Berhasil Disimpan);
+        document.location.href='penjualan.php';
+        </script>";
+        } else {
+            echo "<script>
+        alert('Gagal');
+        document.location.href='penjualan.php';
+        </script>";
+        }
+    } else {
+        echo "<script>
+        alert('Stock Obat Tidak Cukup');
+        document.location.href='penjualan.php';
+        </script>";
+        die();
+    }
 
     return mysqli_affected_rows($conn);
 }
@@ -81,7 +102,7 @@ function ubah($data)
 function hapus($id)
 {
     global $conn;
-    mysqli_query($conn, "DELETE FROM pembelian WHERE id_pembelian=$id");
+    mysqli_query($conn, "DELETE FROM penjualan WHERE id_penjualan=$id");
     // mysqli_affected akan mengembalikan nilai min1 jika eror
     // namun jika benar akan mengembalikan nilai lebih dari 0
     return mysqli_affected_rows($conn);

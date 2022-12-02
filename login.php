@@ -1,30 +1,30 @@
 <?php
-// session_start();
-// require 'functions.php';
+session_start();
+require 'functions.php';
 
-// if (isset($_SESSION['login'])) {
-//     header('Location:home.php');
-//     exit();
-// }
+if (isset($_SESSION['login'])) {
+    header('Location:home.php');
+    exit();
+}
 
-// if (isset($_POST['login'])) {
-//     $username = $_POST['username'];
-//     $password = $_POST['password'];
+if (isset($_POST['login'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-//     $result = mysqli_query(
-//         $conn,
-//         "SELECT * FROM user WHERE username='$username'"
-//     );
-//     if (mysqli_num_rows($result) === 1) {
-//         $row = mysqli_fetch_assoc($result);
-//         if (password_verify($password, $row['password'])) {
-//             $_SESSION['login'] = true;
-//             header('Location:home.php');
-//             exit();
-//         }
-//     }
-//     $error = true;
-// }
+    $result = mysqli_query(
+        $conn,
+        "SELECT * FROM user WHERE username='$username'"
+    );
+    if (mysqli_num_rows($result) === 1) {
+        $row = mysqli_fetch_assoc($result);
+        if (password_verify($password, $row['password'])) {
+            $_SESSION['login'] = true;
+            header('Location:home.php');
+            exit();
+        }
+    }
+    $error = true;
+}
 ?>
 
 

@@ -113,7 +113,7 @@ if (isset($_POST['submit'])) {
      </form>
         </div>
 
-    <div class="sidebar">
+    <div class="sidebar1">
             <img src="../image/apotek1.png" alt="logo" >
             <h2>Apotek Salosa</h2>
 
@@ -131,12 +131,12 @@ if (isset($_POST['submit'])) {
                 </a>
             </div>
 
-            <div class="satuan">
+            <!-- <div class="satuan">
                 <a href="../satuan/satuan.php">
                 <img src="../image/obatn.svg" alt="satuan" class="img">
                 <button type="button">SATUAN</button>
                 </a>
-            </div>
+            </div> -->
 
             <div class="suplier">
                 <a href="../suplier/suplier.php">

@@ -1,16 +1,16 @@
 <?php
-// require 'functions.php';
+require 'functions.php';
 
-// if (isset($_POST['register'])) {
-//     global $conn;
-//     if (registrasi($_POST) > 0) {
-//         echo "<script>
-//         alert('data berhasil disimpan');
-//         </script>";
-//     } else {
-//         echo mysqli_error($conn);
-//     }
-// }
+if (isset($_POST['register'])) {
+    global $conn;
+    if (registrasi($_POST) > 0) {
+        echo "<script>
+        alert('data berhasil disimpan');
+        </script>";
+    } else {
+        echo mysqli_error($conn);
+    }
+}
 ?>
 
 
@@ -29,7 +29,6 @@
       <form action="" method="post">
           <h2>Registrasi</h2>
           <h3>Enter your Credentials</h3>
-          <input type="email" name="email" placeholder="Email">
 
           <input type="text" name="username"  placeholder="Username">
 

@@ -15,7 +15,7 @@ if (isset($_POST['cari'])) {
     $keyword = $_POST['keyword'];
     $penjualan = mysqli_query(
         $conn,
-        "SELECT * FROM penjualan,obat  WHERE
+        "SELECT id_penjualan,nama_obat,qty,harga,total,tanggal from penjualan join obat on obat.id_obat=penjualan.id_obat  WHERE
    nama_obat LIKE '%$keyword%' OR
    tanggal LIKE '%$keyword%'
     "
@@ -150,12 +150,12 @@ $no = 1;
                 </a>
             </div>
 
-            <div class="satuan">
+            <!-- <div class="satuan">
                 <a href="../satuan/satuan.php">
                 <img src="../image/obatn.svg" alt="satuan" class="img">
                 <button type="button">SATUAN</button>
                 </a>
-            </div>
+            </div> -->
 
             <div class="suplier">
                 <a href="../suplier/suplier.php">
