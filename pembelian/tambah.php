@@ -1,6 +1,10 @@
 <?php
 require 'functionobat.php';
-
+session_start();
+if (!isset($_SESSION['login'])) {
+    header('Location:../admin/login.php');
+    exit();
+}
 // cek apakah tombol sudah di klik atau belim
 if (isset($_POST['submit'])) {
     //   cek apakah data berhasil ditambahkan atau tidak
@@ -174,7 +178,7 @@ if (isset($_POST['submit'])) {
             </div> -->
             <div class="logout">
                 <img src="../image/logout.svg" alt="logout" class="img">
-                <a href="../login.php">
+                <a href="../admin/logout.php">
                 <button type="button">LOGOUT</button>
             </a>
             </div>

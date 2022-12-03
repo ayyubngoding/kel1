@@ -1,19 +1,22 @@
 <?php
-require 'functionobat.php';
+require 'function.php';
 session_start();
 if (!isset($_SESSION['login'])) {
     header('Location:../admin/login.php');
     exit();
 }
+$id = $_GET['ubah'];
+$result = mysqli_query($conn, "SELECT * FROM suplier WHERE id_suplier=$id");
+$suplier = mysqli_fetch_assoc($result);
 
 // cek apakah tombol sudah di klik atau belim
 if (isset($_POST['submit'])) {
     //   cek apakah data berhasil ditambahkan atau tidak
-    if (tambah($_POST) > 0) {
+    if (ubah($_POST) > 0) {
         echo "
     <script>
-    alert('data berhasil disimpan');
-    document.location.href='penjualan.php';
+    alert('data berhasil dirubah');
+    document.location.href='suplier.php';
     </script>
     
     ";
@@ -47,7 +50,7 @@ if (isset($_POST['submit'])) {
             <h2>Page Penjualan</h2>
         </div>
         <div class="tambah">
-            <a href="penjualan.php">
+            <a href="suplier.php">
             <button >Back</button>
             </a>
 
@@ -56,63 +59,40 @@ if (isset($_POST['submit'])) {
         <div class="content">
 
      <form action="" method="post">
-
+    <input type="hidden" name="id" value="<?= $suplier['id_suplier'] ?>">
+    
         <div class="kotak">
-            <div class="label">
-        <label for="namaobat">Nama Obat</label>
+        <div class="label"><label for="nama">Nama Suplier </label>
         </div>
-        <select name="idobat" id="idobat" class="inputobat" onchange='changeValue(this.value)' required >  
-        <option value="">Pilih </option>
-
-        <?php $pembelian = mysqli_query($conn, 'SELECT * FROM obat'); ?>
-                <?php $a = "var harga_jual = new Array();\n;"; ?>
-                    <?php while ($row = mysqli_fetch_assoc($pembelian)): ?>
-                    <option value="<?= $row['id_obat'] ?>"><?= $row[
-    'nama_obat'
-] ?></option>
-                    <?php $a .=
-                        "harga_jual['" .
-                        $row['id_obat'] .
-                        "'] = {harga_jual:'" .
-                        addslashes($row['harga_jual']) .
-                        "'};\n"; ?>
-                    <?php endwhile; ?>
-                     </select>
-        <!-- <input class="inputobat" type="text" id="idobat" name="idobat" onkeyup="autofill()"> -->
+        <input type="text" class="inputobat" id="nama" name="nama"  value="<?= $suplier[
+            'nama'
+        ] ?>">
         </div>
 
         <div class="kotak">
-        <div class="label"><label for="qty">qty</label>
+        <div class="label"><label for="nohp">NO. HP </label>
         </div>
-        <input type="text" class="inputobat" id="qty" name="qty">
+        <input type="text" class="inputobat" id="nohp" name="nohp"  value="<?= $suplier[
+            'nohp'
+        ] ?>">
         </div>
+        
+       
         
         <div class="kotak">
             <div class="label">
-                <label for="harga">Harga</label>
+                <label for="alamat">Alamat</label>
             </div>
-            <input class="inputobat" type="text" id="harga" name="harga" readonly>
+            <input class="inputobat" type="text" id="alamat" name="alamat"  value="<?= $suplier[
+                'alamat'
+            ] ?>">
         </div>
-        
-        <div class="kotak">
-            <div class="label">
-                <label for="total">Total</label>
-            </div>
-            <input class="inputobat" type="text" id="total" name="total">
-        </div>
-
-        <div class="kotak">
-        <div class="label"><label for="tanggal">tanggal</label>
-        </div>
-        <input type="date" class="inputobat" id="tanggal" name="tanggal">
-        </div>
-
 
         <div class="kotak">
             <div class="label">
                 <label for="expired"></label>
             </div>
-        <button class="inputobat" id="submit" type="submit" name="submit">Simpan</button>
+        <button class="inputobat" id="submit" type="submit" name="submit">Ubah</button>
         </div>
        
      </form>
@@ -143,12 +123,12 @@ if (isset($_POST['submit'])) {
                 </a>
             </div> -->
 
-            <div class="suplier">
+            <!-- <div class="suplier">
                 <a href="../suplier/suplier.php">
                 <img src="../image/user1.svg" alt="suplier" class="img">
                 <button type="button">SUPLIER</button>
                 </a>
-            </div>
+            </div> -->
 
             <div class="user">
                 <a href="../user/user.php">
@@ -157,12 +137,12 @@ if (isset($_POST['submit'])) {
                 </a>
             </div>
 
-            <!-- <div class="penjualan">
+            <div class="penjualan">
                 <a href="../penjualan/penjualan.php">
                 <img src="../image/transaksi.svg" alt="penjualan" class="img">
                 <button type="button">PENJUALAN</button>
                 </a>
-            </div> -->
+            </div>
 
             <div class="pembelian">
                 <a href="../pembelian/pembelian.php">
@@ -170,6 +150,7 @@ if (isset($_POST['submit'])) {
                 <button type="button">PEMBELIAN</button>
                 </a>
             </div>
+
             <div class="logout">
                 <img src="../image/logout.svg" alt="logout" class="img">
                 <a href="../admin/logout.php">
@@ -179,29 +160,6 @@ if (isset($_POST['submit'])) {
         </div>
     </div>
 
-    <script src="jquery-3.6.1.min.js"></script>
-    <script type="text/javascript">   
-                          <?php echo $a;
-//   echo $b;
-?>  
-                          function changeValue(id){  
-                            document.getElementById('harga').value = harga_jual[id].harga_jual;  
-                            // document.getElementById('warna').value = warna[id].warna;  
-                          };  
-                          </script>  
-    <!-- <script>
-          function autofill(){
-                var nama_obat = $("#idobat").val();
-                $.ajax({
-                    url: 'autofil.php',
-                    data:"idobat="+nama_obat ,
-                }).done(function (data) {
-                    var json = data,
-                    obj = JSON.parse(json);
-                    $('#harga').val(obj.harga_jual);
-                
-                });
-            }
-    </script> -->
+   
 </body>
 </html>

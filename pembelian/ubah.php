@@ -1,5 +1,10 @@
 <?php
 require 'functionobat.php';
+session_start();
+if (!isset($_SESSION['login'])) {
+    header('Location:../admin/login.php');
+    exit();
+}
 $id = $_GET['ubah'];
 $pembelian = mysqli_query(
     $conn,
@@ -192,7 +197,7 @@ if (isset($_POST['submit'])) {
             </div> -->
             <div class="logout">
                 <img src="../image/logout.svg" alt="logout" class="img">
-                <a href="../login.php">
+                <a href="../admin/logout.php">
                 <button type="button">LOGOUT</button>
             </a>
             </div>

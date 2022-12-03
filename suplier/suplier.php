@@ -1,12 +1,12 @@
 <?php
-require 'functionobat.php';
+require 'function.php';
 session_start();
 if (!isset($_SESSION['login'])) {
     header('Location:../admin/login.php');
     exit();
 }
-$jumlahDataPerHalaman = 5;
-$query = mysqli_query($conn, 'SELECT * FROM pembelian');
+$jumlahDataPerHalaman = 2;
+$query = mysqli_query($conn, 'SELECT * FROM suplier');
 $jumlahData = mysqli_num_rows($query);
 $jumlahHalaman = ceil($jumlahData / $jumlahDataPerHalaman);
 $halamanAktif = isset($_GET['halaman']) ? $_GET['halaman'] : 1;
@@ -18,17 +18,15 @@ $awalData = $jumlahDataPerHalaman * $halamanAktif - $jumlahDataPerHalaman;
 // );
 if (isset($_POST['cari'])) {
     $keyword = $_POST['keyword'];
-    $obat = mysqli_query(
+    $suplier = mysqli_query(
         $conn,
-        "SELECT id_pembelian,nama_obat,nama,qty,harga,total,tanggal from pembelian join obat on obat.id_obat=pembelian.id_obat join suplier on suplier.id_suplier=pembelian.id_suplier WHERE
-   nama_obat LIKE '%$keyword%' OR
-   tanggal LIKE '%$keyword%'
-    "
+        "SELECT * FROM suplier  WHERE
+   nama LIKE '%$keyword%' "
     );
 } else {
-    $obat = mysqli_query(
+    $suplier = mysqli_query(
         $conn,
-        "SELECT id_pembelian,nama_obat,nama,qty,harga,total,tanggal from pembelian join obat on obat.id_obat=pembelian.id_obat join suplier on suplier.id_suplier=pembelian.id_suplier LIMIT $awalData,$jumlahDataPerHalaman "
+        "SELECT * FROM suplier  LIMIT $awalData,$jumlahDataPerHalaman "
     );
 }
 $no = 1;
@@ -52,7 +50,7 @@ $no = 1;
 <body>
     <div class="container-obat">
         <div class="navbar">
-            <h2>Page Pembelian</h2>
+            <h2>Page Suplier</h2>
         </div>
         <div class="tambah">
             <a href="tambah.php">
@@ -75,32 +73,27 @@ $no = 1;
 
       <tr>
                 <th>NO.URUT</th>
-                <th>NAMA OBAT</th>
                 <th>NAMA SUPLIER</th>
-                <th>QTY</th>
-                <th>TANGGAL</th>
-                <th>TOTAL</th>
+                <th>NO.HP</th>
+                <th>ALAMAT</th>
                 <th colspan="2">AKSI</th>
      </tr>
 
-        <?php while ($row = mysqli_fetch_assoc($obat)): ?>
+        <?php while ($row = mysqli_fetch_assoc($suplier)): ?>
         <tr>
            <td><?= $no ?></td>
-           <td class="idobat"><?= $row['id_pembelian'] ?></td>
-           <td><?= $row['nama_obat'] ?></td>
            <td><?= $row['nama'] ?></td>
-           <td><?= $row['qty'] ?></td>
-           <td><?= $row['tanggal'] ?></td>
-           <td><?= $row['total'] ?></td>
+           <td><?= $row['nohp'] ?></td>
+           <td><?= $row['alamat'] ?></td>
 
            <td>
-            <a href="ubah.php?ubah=<?php echo $row['id_pembelian']; ?>">
+            <a href="ubah.php?ubah=<?php echo $row['id_suplier']; ?>">
                 <img class="edit" src="../image/update.svg" alt="">
             </a>
            </td>
            <td>
             <a href="hapus.php?hapus=<?= $row[
-                'id_pembelian'
+                'id_suplier'
             ] ?>" onclick="return confirm('Apakah Data Akan di Hapus?')">
             <img class="hapus" src="../image/Delete.svg" alt="">
             </a>
@@ -123,9 +116,9 @@ $no = 1;
 
       <?php for ($i = 1; $i <= $jumlahHalaman; $i++): ?>
         <?php if ($i == $halamanAktif): ?>
-        <a class="halaman" href="pembelian.php?halaman=<?= $i ?>"><?= $i ?></a>
+        <a class="halaman" href="penjualan.php?halaman=<?= $i ?>"><?= $i ?></a>
         <?php else: ?>
-            <a href="pembelian.php?halaman=<?= $i ?>"><?= $i ?></a>
+            <a href="penjualan.php?halaman=<?= $i ?>"><?= $i ?></a>
             <?php endif; ?>
       <?php endfor; ?>
 
@@ -154,20 +147,20 @@ $no = 1;
                 <button type="button">OBAT</button>
                 </a>
             </div>
-<!-- 
-            <div class="satuan">
+
+            <!-- <div class="satuan">
                 <a href="../satuan/satuan.php">
                 <img src="../image/obatn.svg" alt="satuan" class="img">
                 <button type="button">SATUAN</button>
                 </a>
             </div> -->
 
-            <div class="suplier">
+            <!-- <div class="suplier">
                 <a href="../suplier/suplier.php">
                 <img src="../image/user1.svg" alt="suplier" class="img">
                 <button type="button">SUPLIER</button>
                 </a>
-            </div>
+            </div> -->
 
             <div class="user">
                 <a href="../user/user.php">
@@ -183,12 +176,12 @@ $no = 1;
                 </a>
             </div>
 
-            <!-- <div class="pembelian">
+            <div class="pembelian">
                 <a href="../pembelian/pembelian.php">
                 <img src="../image/transaksi.svg" alt="pembelian" class="img">
                 <button type="button">PEMBELIAN</button>
                 </a>
-            </div> -->
+            </div>
             <div class="logout">
                 <img src="../image/logout.svg" alt="logout" class="img">
                 <a href="../admin/logout.php">

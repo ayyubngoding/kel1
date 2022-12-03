@@ -1,5 +1,10 @@
 <?php
 require 'functionobat.php';
+session_start();
+if (!isset($_SESSION['login'])) {
+    header('Location:../admin/login.php');
+    exit();
+}
 $id = $_GET['ubah'];
 $pembelian = mysqli_query(
     $conn,
@@ -176,23 +181,24 @@ if (isset($_POST['submit'])) {
                 <button type="button">USER</button>
                 </a>
             </div>
-
+<!-- 
             <div class="penjualan">
                 <a href="../penjualan/penjualan.php">
                 <img src="../image/transaksi.svg" alt="penjualan" class="img">
                 <button type="button">PENJUALAN</button>
                 </a>
-            </div>
+            </div> -->
 
-            <!-- <div class="pembelian">
+            <div class="pembelian">
                 <a href="../pembelian/pembelian.php">
                 <img src="../image/transaksi.svg" alt="pembelian" class="img">
                 <button type="button">PEMBELIAN</button>
                 </a>
-            </div> -->
+            </div>
+
             <div class="logout">
                 <img src="../image/logout.svg" alt="logout" class="img">
-                <a href="../login.php">
+                <a href="../admin/logout.php">
                 <button type="button">LOGOUT</button>
             </a>
             </div>

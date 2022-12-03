@@ -15,7 +15,7 @@ body {
   place-items: center;
   margin: 0;
   padding: 0 24px;
-  background-color: rgb(1, 68, 123);
+  background-image: url(../image/bg1.svg);
   background-repeat: no-repeat;
   background-size: cover;
   animation: pan 6s infinite alternate linear;

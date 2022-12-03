@@ -3,7 +3,7 @@ session_start();
 require 'functions.php';
 
 if (isset($_SESSION['login'])) {
-    header('Location:home.php');
+    header('Location:../home.php');
     exit();
 }
 
@@ -19,7 +19,7 @@ if (isset($_POST['login'])) {
         $row = mysqli_fetch_assoc($result);
         if (password_verify($password, $row['password'])) {
             $_SESSION['login'] = true;
-            header('Location:home.php');
+            header('Location:../home.php');
             exit();
         }
     }
@@ -36,10 +36,10 @@ if (isset($_POST['login'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="../css/login.css">
    
 </head>
-<body>
+<body style=" background-image: url(../image/bg1.svg);">
   <div class="container">
       <form action="" method="post">
           <h2>Login</h2>

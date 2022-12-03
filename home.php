@@ -1,8 +1,8 @@
 <?php
-require 'functions.php';
+require 'admin/functions.php';
 session_start();
 if (!isset($_SESSION['login'])) {
-    header('Location:login.php');
+    header('Location:admin/login.php');
     exit();
 }
 
@@ -78,7 +78,7 @@ $total = $pendapatan['totall'];
             </div>
         </a>
 
-            <a style="text-decoration: none;" href="user/user.php">
+            <a style="text-decoration: none;" href="admin/user.php">
             <div class="user">
                     <img src="image/user2.svg" alt="user" class="img">
                     <button type="button">USER</button>
@@ -99,7 +99,7 @@ $total = $pendapatan['totall'];
             </div>
         </a>
 
-            <a style="text-decoration: none;" href="logout.php">
+            <a style="text-decoration: none;" href="admin/logout.php">
             <div class="logout">
                 <img src="image/logout.svg" alt="logout" class="img">
                 <button type="button">LOGOUT</button>

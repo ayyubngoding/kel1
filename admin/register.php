@@ -1,6 +1,5 @@
 <?php
 require 'functions.php';
-
 if (isset($_POST['register'])) {
     global $conn;
     if (registrasi($_POST) > 0) {
@@ -21,10 +20,10 @@ if (isset($_POST['register'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="../css/login.css">
    
 </head>
-<body>
+<body style=" background-image: url(../image/bg1.svg);">
   <div class="container">
       <form action="" method="post">
           <h2>Registrasi</h2>
